@@ -3,15 +3,22 @@ import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
+import PageHeader from '../components/PageHeader';
+
 export interface LayoutProps {
   children?: React.ReactNode;
 }
 
 const Body = styled.div`
-  margin-left: 25rem;
-  overflow: hidden;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  min-height: 100%;
+`;
+
+const StyledPageHeader = styled(PageHeader)`
+  width: 100%;
+  z-index: 1000;
 `;
 
 const Footer = ({ ...props }) => {
@@ -71,6 +78,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       </Head>
 
       <Body>
+        <StyledPageHeader />
         {children}
         <StyledFooter />
       </Body>
