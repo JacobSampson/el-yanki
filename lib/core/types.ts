@@ -1,4 +1,4 @@
-export type Language = 'en' | 'es';
+export type Language = 'us-en' | 'ar-es';
 export type Topic =
   | 'argentine-culture-overview'
   | 'education'

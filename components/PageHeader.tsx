@@ -89,13 +89,7 @@ const PageHeader = () => {
     <Container>
       <Logo>
         <Link href="/">
-          <>
-            <Image src="/logo.png" alt="Logo" width={70} height={70}></Image>
-            <div>
-              <SiteTitle>El Yanki</SiteTitle>
-              <SiteSubtitle>en Buenos Aires</SiteSubtitle>
-            </div>
-          </>
+          <Image src="/logo.svg" alt="Logo" width={223} height={46}></Image>
         </Link>
       </Logo>
 
