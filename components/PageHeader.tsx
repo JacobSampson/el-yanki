@@ -51,7 +51,6 @@ const StyledLinks = styled.div<{ isOpen: boolean }>`
   border-radius: 1rem 0rem 1rem 1rem;
   box-shadow: 2px 2px 19px rgb(0 0 0 / 23%);
   overflow: hidden;
-  padding-bottom: 20%;
   transform-origin: 0 0;
   opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
   transform: scaleY(${({ isOpen }) => (isOpen ? '1' : '0')});
