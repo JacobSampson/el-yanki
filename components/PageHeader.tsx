@@ -7,30 +7,19 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.palette.secondary.main};
   position: relative;
   height: 3rem;
-  padding: 2.5rem;
+  padding: 2.5rem 0;
 `;
 
 const Logo = styled.div`
-  margin: -2.5rem -2.25rem;
   display: flex;
   justify-content: center;
   align-items: center;
   color: ${({ theme }) => theme.palette.secondary.contrastText};
   grid-gap: 1rem;
   user-select: none;
-`;
-
-const SiteTitle = styled.p`
-  font-weight: 600;
-  font-size: 1.25rem;
-  margin: 0;
-`;
-const SiteSubtitle = styled.p`
-  margin: 0;
-  opacity: 75%;
+  margin-left: -3rem;
 `;
 
 const StyledNavOpen = styled.div`
@@ -42,7 +31,7 @@ const StyledNavOpen = styled.div`
   align-items: center;
   font-size: 2rem;
   font-weight: 900;
-  margin: -0.25rem 0 0 0;
+  margin: -0.25rem 1em 0 0;
   transition: 0.25s ease-in-out;
   user-select: none;
 
@@ -56,7 +45,6 @@ const StyledLinks = styled.div<{ isOpen: boolean }>`
   position: absolute;
   top: 100%;
   right: 0;
-  /* max-width: 20rem; */
   width: 20rem;
   margin: 0;
   background-color: ${({ theme }) => theme.palette.secondary.main};
@@ -81,15 +69,15 @@ const StyledLink = styled.div`
   }
 `;
 
-const PageHeader = () => {
+const PageHeader = ({ ...props }) => {
   const { palette } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Container>
+    <Container {...props}>
       <Logo>
         <Link href="/">
-          <Image src="/logo.svg" alt="Logo" width={223} height={46}></Image>
+          <Image src="/logo.svg" alt="el yanki" width={223} height={46}></Image>
         </Link>
       </Logo>
 

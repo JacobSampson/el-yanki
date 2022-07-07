@@ -59,7 +59,7 @@ const response = [
         {
           type: 'image',
           // url: 'https://images.prismic.io/slicemachine-blank/26d81419-4d65-46b8-853e-8ea902e160c1_groovy.png?auto=compress,format',
-          url: '/logo.png',
+          url: '/resources/icons/logo.png',
           alt: null,
           copyright: null,
           dimensions: { width: 2048, height: 1536 },

@@ -62,13 +62,8 @@ export interface LanguageToggleProps {}
 const LanguageToggle: React.FC<LanguageToggleProps> = ({ ...props }) => {
   const { language, toggle } = useLanguageContext();
 
-  const handleClick = () => {
-    console.log('Clicked!', language, toggle);
-    toggle();
-  };
-
   return (
-    <Container onClick={handleClick} {...props}>
+    <Container onClick={toggle} {...props}>
       <Knob atStart={language === 'us-en'} />
       <Gutter active={language === 'us-en'}>English</Gutter>
       <Gutter active={language === 'us-en'}>Espa&ntilde;ol</Gutter>

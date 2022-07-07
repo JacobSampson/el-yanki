@@ -13,13 +13,14 @@ const Body = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
-  background-color: ${({ theme }) => theme.palette.primary.main};
+  min-height: 100vh;
+  background-color: white;
 `;
 
 const StyledPageHeader = styled(PageHeader)`
   width: 100%;
   z-index: 1000;
+  background-color: ${({ theme }) => theme.palette.primary.main};
 `;
 
 const Footer = ({ ...props }) => {
@@ -31,8 +32,6 @@ const Footer = ({ ...props }) => {
 };
 
 const StyledFooter = styled(Footer)`
-  background-color: #9fb8ad90;
-  /* background-color: #499b3955; */
   padding: 3rem;
   margin-top: auto;
 
