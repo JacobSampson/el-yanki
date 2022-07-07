@@ -32,7 +32,7 @@ const Description = styled.p``;
 
 const Availability = styled.p<{ isLocked: boolean }>``;
 
-const TopicOverview: React.FC<TopicOverviewProps> = ({
+const TopicOverview: React.FC<TopicOverviewProps & Partial<HTMLElement>> = ({
   isLocked = false,
   title,
   subTitle,

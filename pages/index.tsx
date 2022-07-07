@@ -48,9 +48,26 @@ const StyledWave = styled(Wave)<{ offset?: number; n?: number }>`
 
 const wavePattern = (x: number, dampening: number = 1): number => Math.sin(x / dampening) + 1;
 
-const SlidingWave = ({ n, maxYOffset, ...props }: { n?: number; maxYOffset: number }) => {
+const SlidingWave = ({
+  n,
+  fill,
+  maxYOffset,
+  ...props
+}: {
+  n?: number;
+  fill?: string;
+  maxYOffset: number;
+}) => {
   const { ref, y } = useRelativeY();
-  return <StyledWave n={n} innerRef={ref} offset={wavePattern(y, 50) * maxYOffset} {...props} />;
+  return (
+    <StyledWave
+      n={n}
+      fill={fill}
+      innerRef={ref}
+      offset={wavePattern(y, 50) * maxYOffset}
+      {...props}
+    />
+  );
 };
 
 export default function Home() {
@@ -65,7 +82,7 @@ export default function Home() {
             subTitle="topic 1/13"
             description="This is a brief description"
             isLocked
-            style={{ backgroundColor: '#6CACE4', padding: '4rem 0', textAlign: 'center' }}
+            style={{ backgroundColor: '#6CACE4', padding: '4rem 0', textAlign: 'center' } as any}
           />
 
           <SlidingWave n={1} maxYOffset={2} fill="#FFB81C" />
