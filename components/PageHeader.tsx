@@ -43,13 +43,14 @@ const StyledNavOpen = styled.div`
 
 const StyledLinks = styled.div<{ isOpen: boolean }>`
   position: absolute;
-  top: 100%;
-  right: 0;
+  top: calc(100% - 1.75rem);
+  right: 2.75rem;
   width: 20rem;
   margin: 0;
-  background-color: ${({ theme }) => theme.palette.secondary.main};
   transition: 0.25s ease-in-out;
-
+  border-radius: 1rem 0rem 1rem 1rem;
+  box-shadow: 2px 2px 19px rgb(0 0 0 / 23%);
+  overflow: hidden;
   transform-origin: 0 0;
   opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
   transform: scaleY(${({ isOpen }) => (isOpen ? '1' : '0')});
@@ -65,7 +66,7 @@ const StyledLink = styled.div`
 
   &:hover {
     cursor: pointer;
-    opacity: 85%;
+    filter: brightness(120%);
   }
 `;
 
@@ -82,7 +83,7 @@ const PageHeader = ({ ...props }) => {
       </Logo>
 
       <nav>
-        <StyledNavOpen onClick={() => setIsOpen(!isOpen)}>=</StyledNavOpen>
+        <StyledNavOpen onClick={() => setIsOpen(!isOpen)}>{isOpen ? '▼' : '='}</StyledNavOpen>
         <StyledLinks isOpen={isOpen}>
           <Link href="/">
             <StyledLink style={{ backgroundColor: palette.primary.main }}>Home</StyledLink>

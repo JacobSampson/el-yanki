@@ -15,7 +15,7 @@ export interface TopicOverviewProps {
 const Title = styled.h3``;
 
 const SubTitle = styled.h4`
-  background-color: ${({ theme }) => theme.palette.primary.main};
+  // background-color: ${({ theme }) => theme.palette.primary.main};
 
   $::after {
     content: '→';
