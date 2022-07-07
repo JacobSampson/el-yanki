@@ -46,6 +46,11 @@ const StyledWave = styled(Wave)<{ offset?: number; n?: number }>`
   transition: ease-in-out 0.125s;
 `;
 
+const StyledTopicOverview = styled(TopicOverview)`
+  margin-top: 35%;
+  text-align: center;
+`;
+
 const wavePattern = (x: number, dampening: number = 1): number => Math.sin(x / dampening) + 1;
 
 const SlidingWave = ({
@@ -77,7 +82,7 @@ export default function Home() {
         <Waves>
           <StyledLanguageToggle />
 
-          <TopicOverview
+          <StyledTopicOverview
             title="Argentine Culture Overview"
             subTitle="topic 1/13"
             description="This is a brief description"
@@ -89,7 +94,7 @@ export default function Home() {
           <StyledWave />
         </Waves>
 
-        <TopicOverview
+        <StyledTopicOverview
           title="Argentine Culture Overview"
           subTitle="topic 1/13"
           description="This is a brief description"
