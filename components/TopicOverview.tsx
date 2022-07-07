@@ -10,6 +10,7 @@ export interface TopicOverviewProps {
   description: string;
   isLocked?: boolean;
   children?: React.ReactNode;
+  style: React.CSSProperties;
 }
 
 const Title = styled.h3``;
@@ -32,7 +33,7 @@ const Description = styled.p``;
 
 const Availability = styled.p<{ isLocked: boolean }>``;
 
-const TopicOverview: React.FC<TopicOverviewProps & Partial<HTMLElement>> = ({
+const TopicOverview: React.FC<TopicOverviewProps> = ({
   isLocked = false,
   title,
   subTitle,
