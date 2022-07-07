@@ -82,7 +82,7 @@ export default function Home() {
         <Waves>
           <StyledLanguageToggle />
 
-          <StyledTopicOverview
+          <TopicOverview
             title="Argentine Culture Overview"
             subTitle="topic 1/13"
             description="This is a brief description"
