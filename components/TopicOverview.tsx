@@ -10,7 +10,7 @@ export interface TopicOverviewProps {
   description: string;
   isLocked?: boolean;
   children?: React.ReactNode;
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
 }
 
 const Title = styled.h3``;
