@@ -44,7 +44,7 @@ const StyledWave = styled(Wave)<{
   z-index: 0;
   ${({ n, reverse }) => (reverse ? `bottom: calc(100% + ${n}rem);` : `top: calc(100% + ${n}rem);`)}
   transition: ease-in-out 0.125s;
-`;
+` as any;
 
 const SlidingWave = ({
   reverse,
@@ -71,17 +71,15 @@ const SlidingWave = ({
       n={n || 0}
       fill={fill}
       {...props}
-      style={
-        {
-          transform: `
+      style={{
+        transform: `
           translate(
             ${2 * (wavePattern(t, 50) - 1) * offset}rem,
             ${wavePattern(absoluteY + t, 50) * offset}rem
           )
           scale(1.1) rotate(${reverse ? '180deg' : '0deg'})
         `,
-        } as any
-      }
+      }}
     />
   );
 };
