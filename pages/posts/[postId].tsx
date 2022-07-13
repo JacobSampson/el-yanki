@@ -19,7 +19,7 @@ const StyledWaves = styled(Waves)`
   background-color: #6cace4;
 `;
 
-const PostPage: React.FC<PostPageProps> = ({ post }: Post) => {
+const PostPage: React.FC<PostPageProps> = ({ post }) => {
   return (
     <Container>
       <StyledWaves colors={['#FFB81C', '#6CACE4']}>Posts</StyledWaves>
@@ -63,12 +63,18 @@ const response = [
   },
 ];
 
-export async function getServerSideProps({ postId, query }: { query: { lang: Language } }) {
-  const post = await PrismicService.post({ postId, language: query.lang });
-  console.log('u', post);
+export async function getServerSideProps({
+  postId,
+  query,
+}: {
+  postId: string;
+  query: { lang: Language };
+}) {
+  // const post = await PrismicService.post({ postId, language: query.lang });
+  // console.log('u', post);
   return {
     props: {
-      post: response,
+      post: {},
     },
   };
 }
