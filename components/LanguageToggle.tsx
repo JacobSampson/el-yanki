@@ -1,6 +1,7 @@
-import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 import { useLanguageContext } from '../lib/client/contexts/LanguageContext';
+import { useEffect } from 'react';
 
 const Container = styled.div`
   width: 11rem;
@@ -61,6 +62,22 @@ export interface LanguageToggleProps {}
 
 const LanguageToggle: React.FC<LanguageToggleProps> = ({ ...props }) => {
   const { language, toggle } = useLanguageContext();
+  const router = useRouter();
+
+  const { query, route } = router;
+
+  useEffect(() => {
+    if (query.lang === language || (language === 'us-en' && !query.lang)) {
+      return;
+    }
+
+    if (language === 'us-en') {
+      router.push(route);
+      return;
+    }
+
+    router.push({ pathname: route, query: { lang: language } });
+  }, [router, query, route, language]);
 
   return (
     <Container onClick={toggle} {...props}>

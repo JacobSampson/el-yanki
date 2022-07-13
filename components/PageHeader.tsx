@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 
 const Container = styled.div`
@@ -54,6 +54,13 @@ const StyledLinks = styled.div<{ isOpen: boolean }>`
   transform-origin: 0 0;
   opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
   transform: scaleY(${({ isOpen }) => (isOpen ? '1' : '0')});
+
+  @media (max-width: ${({ theme }) => theme.screen.xsmall}) {
+    width: 100%;
+    right: 0;
+    top: calc(100% - 0rem);
+    border-top-right-radius: 1rem;
+  }
 `;
 
 const StyledLink = styled.div`
@@ -74,6 +81,20 @@ const PageHeader = ({ ...props }) => {
   const { palette } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
+  const navButtonRef = useRef<any>();
+
+  useEffect(() => {
+    const closeMenu = (event: MouseEvent) => {
+      if (!isOpen || !navButtonRef?.current || event.target === navButtonRef.current) return;
+
+      setIsOpen(false);
+    };
+
+    document.addEventListener('click', closeMenu);
+
+    return () => document.removeEventListener('click', closeMenu);
+  }, [navButtonRef, isOpen]);
+
   return (
     <Container {...props}>
       <Logo>
@@ -83,13 +104,12 @@ const PageHeader = ({ ...props }) => {
       </Logo>
 
       <nav>
-        <StyledNavOpen onClick={() => setIsOpen(!isOpen)}>{isOpen ? '▼' : '='}</StyledNavOpen>
+        <StyledNavOpen ref={navButtonRef} onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? '✕' : '='}
+        </StyledNavOpen>
         <StyledLinks isOpen={isOpen}>
           <Link href="/">
             <StyledLink style={{ backgroundColor: palette.primary.main }}>Home</StyledLink>
-          </Link>
-          <Link href="/">
-            <StyledLink style={{ backgroundColor: palette.accent.medium }}>Posts</StyledLink>
           </Link>
           <Link href="/updates">
             <StyledLink style={{ backgroundColor: palette.accent.light }}>Updates</StyledLink>

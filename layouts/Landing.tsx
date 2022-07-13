@@ -13,7 +13,6 @@ const Body = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  min-height: 300vh;
   background-color: white;
 `;
 
@@ -34,7 +33,7 @@ const Footer = ({ ...props }) => {
 const StyledFooter = styled(Footer)`
   padding: 3rem;
   margin-top: auto;
-
+  background-color: ${({ theme }) => theme.palette.secondary.main};
   ul {
     list-style: none;
     margin: 0;

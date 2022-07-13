@@ -1,4 +1,4 @@
-import { forwardRef, MutableRefObject } from 'react';
+import { MutableRefObject } from 'react';
 import styled from 'styled-components';
 
 export interface WaveProps {

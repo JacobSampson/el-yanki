@@ -1,7 +1,9 @@
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 
-const Container = styled.section``;
+const Container = styled.section`
+  padding: 2rem;
+`;
 
 export interface UpdateProps {
   title: string;

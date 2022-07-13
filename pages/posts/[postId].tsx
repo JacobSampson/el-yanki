@@ -1,44 +1,28 @@
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 
-import Layout from '../../layouts/Landing';
 import PrismicService from '../../lib/core/services/prismic';
 import { Language } from '../../lib/core/types';
-import Update from '../../components/Update';
 import Waves from '../../components/Waves';
 
 const Container = styled.main``;
 
-export type Update = {
+export type Post = {
   title: string;
 };
 
-export interface UpdatesPageProps {
-  updates: Update[];
+export interface PostPageProps {
+  post: Post;
 }
 
 const StyledWaves = styled(Waves)`
   background-color: #6cace4;
 `;
 
-const Title = styled.h2`
-  text-align: center;
-`;
-
-const UpdatesPage: React.FC<UpdatesPageProps> = ({ updates }: { updates: any[] }) => {
-  console.log('updates', updates);
+const PostPage: React.FC<PostPageProps> = ({ post }: Post) => {
   return (
     <Container>
-      <StyledWaves colors={['#FFB81C', '#6CACE4']}>
-        <Title>Updates</Title>
-      </StyledWaves>
-      {updates.map(update => (
-        <Update
-          key={update.data.title[0].text}
-          title={update.data.title[0].text}
-          body={update.data.body}
-        />
-      ))}
+      <StyledWaves colors={['#FFB81C', '#6CACE4']}>Posts</StyledWaves>
     </Container>
   );
 };
@@ -79,14 +63,14 @@ const response = [
   },
 ];
 
-export async function getServerSideProps({ query }: { query: { lang: Language } }) {
-  // const updates = await PrismicService.updates({ language: query.lang });
-  // console.log('u', updates);
+export async function getServerSideProps({ postId, query }: { query: { lang: Language } }) {
+  const post = await PrismicService.post({ postId, language: query.lang });
+  console.log('u', post);
   return {
     props: {
-      updates: response,
+      post: response,
     },
   };
 }
 
-export default UpdatesPage;
+export default PostPage;
