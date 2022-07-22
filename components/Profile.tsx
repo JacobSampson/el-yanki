@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
+import useLocalization from '../lib/client/hooks/useLocalization';
 
 export interface ProfileProps {
   title: string;
@@ -100,7 +101,8 @@ const Profile: React.FC<ProfileProps> = ({
   quoteAuthor,
   ...props
 }) => {
-  console.log('profile', profile);
+  const l = useLocalization();
+
   return (
     <Container {...props}>
       <StyledImage>
@@ -113,10 +115,10 @@ const Profile: React.FC<ProfileProps> = ({
         </About>
         <Links>
           <Link href="updates">
-            <StyledLink>updates</StyledLink>
+            <StyledLink>{l('updates')}</StyledLink>
           </Link>
           <Link href="#reports">
-            <StyledLink>reports</StyledLink>
+            <StyledLink>{l('reports')}</StyledLink>
           </Link>
         </Links>
       </Details>

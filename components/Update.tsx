@@ -16,7 +16,6 @@ export interface UpdateProps {
 }
 
 const Update: React.FC<UpdateProps> = ({ title, body, ...props }) => {
-  console.log(title, body);
   return (
     <Container {...props}>
       <h2>{title}</h2>

@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
+import useLocalization from '../lib/client/hooks/useLocalization';
 
 const Container = styled.div`
   display: flex;
@@ -77,10 +78,15 @@ const StyledLink = styled.div`
   }
 `;
 
+const StyledLogo = styled(Image)`
+  cursor: pointer;
+`;
+
 const PageHeader = ({ ...props }) => {
   const { palette } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
+  const l = useLocalization();
 
+  const [isOpen, setIsOpen] = useState(false);
   const navButtonRef = useRef<any>();
 
   useEffect(() => {
@@ -99,7 +105,7 @@ const PageHeader = ({ ...props }) => {
     <Container {...props}>
       <Logo>
         <Link href="/">
-          <Image src="/logo.svg" alt="el yanki" width={223} height={46}></Image>
+          <StyledLogo src="/logo.svg" alt="el yanki" width={223} height={46}></StyledLogo>
         </Link>
       </Logo>
 
@@ -109,10 +115,12 @@ const PageHeader = ({ ...props }) => {
         </StyledNavOpen>
         <StyledLinks isOpen={isOpen}>
           <Link href="/">
-            <StyledLink style={{ backgroundColor: palette.primary.main }}>Home</StyledLink>
+            <StyledLink style={{ backgroundColor: palette.primary.main }}>{l('Home')}</StyledLink>
           </Link>
           <Link href="/updates">
-            <StyledLink style={{ backgroundColor: palette.accent.light }}>Updates</StyledLink>
+            <StyledLink style={{ backgroundColor: palette.accent.light }}>
+              {l('Updates')}
+            </StyledLink>
           </Link>
         </StyledLinks>
       </nav>

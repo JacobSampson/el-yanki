@@ -7,6 +7,7 @@ import { Language } from '../lib/core/types';
 import { Report } from '../lib/core/models/report';
 import Profile from '../components/Profile';
 import Quote from '../components/Quote';
+import useLocalization from '../lib/client/hooks/useLocalization';
 
 const Container = styled.main`
   position: relative;
@@ -67,7 +68,8 @@ const LandingPage = ({
   quoteAuthor: string;
   reports: Report[];
 }) => {
-  console.log('p', reports);
+  const l = useLocalization();
+
   return (
     <Container>
       <StyledLanguageToggle />
@@ -95,7 +97,7 @@ const LandingPage = ({
                 key={uid}
                 reportId={uid}
                 title={title}
-                subTitle={`report ${reportNumber}/${reports.length}`}
+                subTitle={`${l('report')} ${reportNumber}/${reports.length}`}
                 description={summary}
                 isLocked={!!isLocked}
                 cover={cover}
