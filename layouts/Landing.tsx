@@ -14,6 +14,7 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
+  min-height: 100vh;
 `;
 
 const StyledPageHeader = styled(PageHeader)`

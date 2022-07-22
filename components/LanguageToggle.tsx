@@ -42,11 +42,11 @@ const Gutter = styled.div<{ active: boolean }>`
   }
 `;
 
-const Knob = styled.div<{ atStart: boolean }>`
+const Knob = styled.div<{ selector?: boolean; atStart: boolean }>`
   position: absolute;
   width: calc(50%);
   height: calc(100%);
-  background-color: #ffb81c;
+  background-color: ${({ selector }) => (selector ? '#ffb81c' : 'white')};
   transform: skew(-14deg);
 
   ${({ atStart }) => !atStart && 'right: 0'};
@@ -67,11 +67,11 @@ const LanguageToggle: React.FC<LanguageToggleProps> = ({ ...props }) => {
   const { query, route } = router;
 
   useEffect(() => {
-    if (query.lang === language || (language === 'us-en' && !query.lang)) {
+    if (query.lang === language || (language === 'en-us' && !query.lang)) {
       return;
     }
 
-    if (language === 'us-en') {
+    if (language === 'en-us') {
       router.push(route);
       return;
     }
@@ -81,9 +81,10 @@ const LanguageToggle: React.FC<LanguageToggleProps> = ({ ...props }) => {
 
   return (
     <Container onClick={toggle} {...props}>
-      <Knob atStart={language === 'us-en'} />
-      <Gutter active={language === 'us-en'}>English</Gutter>
-      <Gutter active={language === 'us-en'}>Espa&ntilde;ol</Gutter>
+      <Knob selector atStart={language === 'en-us'} />
+      <Knob atStart={language !== 'en-us'} />
+      <Gutter active={language === 'en-us'}>English</Gutter>
+      <Gutter active={language === 'en-us'}>Espa&ntilde;ol</Gutter>
     </Container>
   );
 };

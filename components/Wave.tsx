@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export interface WaveProps {
   fill?: string;
   innerRef?: any | MutableRefObject<HTMLElement>;
+  reverse?: boolean;
 }
 
 const Svg = styled.svg.attrs({
@@ -12,7 +13,7 @@ const Svg = styled.svg.attrs({
   xmlnsXlink: 'http://www.w3.org/1999/xlink',
 })``;
 
-const Wave = ({ fill, innerRef, ...props }: WaveProps) => (
+const Wave = ({ fill, innerRef, reverse, ...props }: WaveProps) => (
   <div ref={innerRef} {...props}>
     <Svg viewBox="-7 0 1123.28 286.13" preserveAspectRatio="xMaxYMin">
       <path

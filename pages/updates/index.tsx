@@ -1,21 +1,32 @@
 import styled from 'styled-components';
-import { RichText } from 'prismic-reactjs';
 
-import Layout from '../../layouts/Landing';
-import PrismicService from '../../lib/core/services/prismic';
 import { Language } from '../../lib/core/types';
 import Update from '../../components/Update';
 import Waves from '../../components/Waves';
+import { Update as UpdateModel } from '../../lib/core/models/update';
 
-const Container = styled.main``;
+const Container = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  gap: 3rem;
+  padding-bottom: 3rem;
+  color: ${({ theme }) => theme.palette.secondary.contrastText};
 
-export type Update = {
-  title: string;
-};
+  & > * {
+    width: 100%;
+  }
+`;
 
 export interface UpdatesPageProps {
-  updates: Update[];
+  updates: UpdateModel[];
 }
+
+const StyledUpdate = styled(Update)`
+  width: 100%;
+  max-width: 50rem;
+`;
 
 const StyledWaves = styled(Waves)`
   background-color: #6cace4;
@@ -33,7 +44,7 @@ const UpdatesPage: React.FC<UpdatesPageProps> = ({ updates }: { updates: any[] }
         <Title>Updates</Title>
       </StyledWaves>
       {updates.map(update => (
-        <Update
+        <StyledUpdate
           key={update.data.title[0].text}
           title={update.data.title[0].text}
           body={update.data.body}

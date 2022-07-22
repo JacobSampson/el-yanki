@@ -2,15 +2,15 @@ import { createContext, useCallback, useContext, useState } from 'react';
 import { Language } from '../../core/types';
 
 const LanguageContext = createContext<{ language: Language; toggle: () => void }>({
-  language: 'us-en',
+  language: 'en-us',
   toggle: () => {},
 });
 
 const LanguageProvider = ({ children }: { children?: React.ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('us-en');
+  const [language, setLanguage] = useState<Language>('en-us');
 
   const toggleLanguage = useCallback(() => {
-    setLanguage(language === 'us-en' ? 'ar-es' : 'us-en');
+    setLanguage(language === 'en-us' ? 'es-ar' : 'en-us');
   }, [language]);
 
   return (

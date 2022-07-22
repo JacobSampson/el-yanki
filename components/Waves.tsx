@@ -16,20 +16,31 @@ const Container = styled.div<{ reverse?: boolean }>`
   flex-direction: column;
   position: relative;
   justify-content: center;
-
-  ${({ reverse }) => (reverse ? 'margin-top: 50%;' : 'margin-bottom: 50%;')}
 `;
 
 const Content = styled.div<{ reverse?: boolean }>`
   display: flex;
   flex-direction: column;
   position: relative;
-  justify-content: center;
+  align-items: center;
   z-index: 50;
 
   * {
     z-index: 100;
   }
+
+  /* ${({ reverse }) => reverse && 'margin-top: 14%'}; */
+`;
+
+const Decoration = styled.div<{
+  reverse?: boolean;
+}>`
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  /* ${({ reverse }) => (reverse ? 'transform: translateY(-5%)' : 'transform: translateY(5%)')};
+  ${({ reverse }) => (reverse ? 'margin-top: 30%' : 'margin-bottom: 30%')}; */
 `;
 
 const StyledWave = styled(Wave)<{
@@ -37,13 +48,15 @@ const StyledWave = styled(Wave)<{
   n: number;
 }>`
   width: 100%;
-  height: 100%;
+  height: fit-content;
   color: ${({ theme }) => theme.palette.primary.main};
   position: absolute;
   left: 0;
   z-index: 0;
-  ${({ n, reverse }) => (reverse ? `bottom: calc(100% + ${n}rem);` : `top: calc(100% + ${n}rem);`)}
+  /* ${({ reverse }) => (reverse ? `bottom: 100%;` : `top: 100%;`)} */
+  transform: translateY(${({ n }) => n}rem);
   transition: ease-in-out 0.125s;
+  top: 100%;
 ` as any;
 
 const SlidingWave = ({
@@ -86,18 +99,20 @@ const SlidingWave = ({
 
 const Waves = ({ colors = [], children, reverse = false, ...props }: WaveProps) => (
   <Container reverse={reverse}>
+    <Decoration reverse={reverse}>
+      {(reverse ? [...colors].reverse() : colors).map((color, n) => (
+        <SlidingWave
+          reverse={!!reverse}
+          key={n}
+          n={colors.length - n - 1}
+          maxOffset={colors.length - n - 1}
+          fill={color}
+        />
+      ))}
+    </Decoration>
     <Content reverse={reverse} {...props}>
       {children}
     </Content>
-    {(reverse ? [...colors].reverse() : colors).map((color, n) => (
-      <SlidingWave
-        reverse={reverse}
-        key={n}
-        n={colors.length - n - 1}
-        maxOffset={colors.length - n - 1}
-        fill={color}
-      />
-    ))}
   </Container>
 );
 

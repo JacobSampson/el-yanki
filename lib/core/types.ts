@@ -1,4 +1,4 @@
-export type Language = 'us-en' | 'ar-es';
+export type Language = 'en-us' | 'es-ar';
 export type Topic =
   | 'argentine-culture-overview'
   | 'education'
@@ -10,6 +10,6 @@ export type Topic =
   | 'latin-america'
   | 'race-ethnicity'
   | 'literature'
-  | 'economic-political issues'
+  | 'economic-political-issues'
   | 'traditions'
   | 'argentine-culture-reflection';
