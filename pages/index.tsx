@@ -113,7 +113,7 @@ const LandingPage = ({
 export async function getServerSideProps({ query }: { query: { lang: Language } }) {
   const [{ title, subTitle, profile, quoteText, quoteAuthor }, reports] = await Promise.all([
     PrismicService.landing({ language: query.lang }),
-    PrismicService.reports({ language: 'es-ar' }),
+    PrismicService.reports({ language: query.lang }),
   ]);
 
   return {
