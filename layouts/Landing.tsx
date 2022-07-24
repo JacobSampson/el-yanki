@@ -10,7 +10,7 @@ import { Report } from '../lib/core/models/report';
 import { Language } from '../lib/core/types';
 
 export interface LayoutProps {
-  reports: Report[];
+  reports?: Report[];
   children?: React.ReactNode;
 }
 
@@ -84,7 +84,7 @@ const StyledFooter = styled(Footer)`
 export const SITE_TITLE = 'El Yanki en Buenos Aires';
 
 export const Layout: React.FC<LayoutProps> = ({ reports, children }) => {
-  console.log('r', reports);
+  console.log('reports', reports);
   return (
     <>
       <Head>
@@ -104,7 +104,7 @@ export const Layout: React.FC<LayoutProps> = ({ reports, children }) => {
       <Body>
         <StyledPageHeader />
         {children}
-        <StyledFooter reports={reports} />
+        <StyledFooter reports={reports || []} />
       </Body>
     </>
   );
