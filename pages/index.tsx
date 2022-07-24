@@ -15,9 +15,9 @@ const Container = styled.main`
 `;
 
 const StyledLanguageToggle = styled(LanguageToggle)`
-  position: fixed;
+  position: absolute;
   left: 0;
-  top: 13rem;
+  top: 7rem;
   transform: rotate(90deg) translateY(3rem);
   z-index: 1000 !important;
 `;

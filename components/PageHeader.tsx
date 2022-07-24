@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import useLocalization from '../lib/client/hooks/useLocalization';
+import useLocalization, { plural } from '../lib/client/hooks/useLocalization';
 
 const Container = styled.div`
   display: flex;
@@ -115,11 +115,11 @@ const PageHeader = ({ ...props }) => {
         </StyledNavOpen>
         <StyledLinks isOpen={isOpen}>
           <Link href="/">
-            <StyledLink style={{ backgroundColor: palette.primary.main }}>{l('Home')}</StyledLink>
+            <StyledLink style={{ backgroundColor: palette.primary.main }}>{l('home')}</StyledLink>
           </Link>
           <Link href="/updates">
             <StyledLink style={{ backgroundColor: palette.accent.light }}>
-              {l('Updates')}
+              {l('update', plural)}
             </StyledLink>
           </Link>
         </StyledLinks>

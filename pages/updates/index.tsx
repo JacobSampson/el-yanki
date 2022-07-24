@@ -4,7 +4,7 @@ import { Language } from '../../lib/core/types';
 import Update from '../../components/Update';
 import Waves from '../../components/Waves';
 import { Update as UpdateModel } from '../../lib/core/models/update';
-import useLocalization from '../../lib/client/hooks/useLocalization';
+import useLocalization, { plural, ucc } from '../../lib/client/hooks/useLocalization';
 import PrismicService from '../../lib/core/services/prismic';
 
 const Container = styled.main`
@@ -43,7 +43,7 @@ const UpdatesPage: React.FC<UpdatesPageProps> = ({ updates }: { updates: any[] }
   return (
     <Container>
       <StyledWaves colors={['#FFB81C', '#6CACE4']}>
-        <Title>{l('Updates')}</Title>
+        <Title>{l('update', plural)}</Title>
       </StyledWaves>
       {updates.map(update => (
         <StyledUpdate

@@ -13,6 +13,7 @@ const Container = styled.div`
   justify-content: space-between;
   user-select: none;
   grid-gap: 0rem;
+  border-radius: 0.5rem;
 
   &:hover {
     cursor: pointer;
@@ -27,7 +28,7 @@ const Gutter = styled.div<{ active: boolean }>`
   height: 100%;
   align-items: center;
   justify-content: center;
-  padding: 0 1rem 0 1rem;
+  padding: 0 1.5rem 0 1.5rem;
 
   &::after {
     content: '';
@@ -83,8 +84,8 @@ const LanguageToggle: React.FC<LanguageToggleProps> = ({ ...props }) => {
     <Container onClick={toggle} {...props}>
       <Knob selector atStart={language === 'en-us'} />
       <Knob atStart={language !== 'en-us'} />
-      <Gutter active={language === 'en-us'}>English</Gutter>
-      <Gutter active={language === 'en-us'}>Espa&ntilde;ol</Gutter>
+      <Gutter active={language === 'en-us'}>english</Gutter>
+      <Gutter active={language === 'en-us'}>espa&ntilde;ol</Gutter>
     </Container>
   );
 };

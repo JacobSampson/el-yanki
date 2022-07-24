@@ -4,8 +4,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 import PageHeader from '../components/PageHeader';
+import useLocalization, { plural } from '../lib/client/hooks/useLocalization';
+import PrismicService from '../lib/core/services/prismic';
+import { Report } from '../lib/core/models/report';
+import { Language } from '../lib/core/types';
 
 export interface LayoutProps {
+  reports: Report[];
   children?: React.ReactNode;
 }
 
@@ -23,10 +28,27 @@ const StyledPageHeader = styled(PageHeader)`
   background-color: ${({ theme }) => theme.palette.primary.main};
 `;
 
-const Footer = ({ ...props }) => {
+const Footer = ({ reports = [], ...props }: { reports: Report[] }) => {
+  const l = useLocalization();
+
   return (
     <footer {...props}>
-      <Link href="/updates?lang=en">Updates</Link>
+      <ul>
+        <li>
+          <Link href="/updates">{l('update', plural)}</Link>
+        </li>
+      </ul>
+      {!!reports?.length && (
+        <ul>
+          <li>
+            {reports.map(({ title, uid }) => (
+              <Link key={uid} href={`/reports/${uid}`}>
+                {title}
+              </Link>
+            ))}
+          </li>
+        </ul>
+      )}
     </footer>
   );
 };
@@ -35,6 +57,8 @@ const StyledFooter = styled(Footer)`
   padding: 3rem;
   margin-top: auto;
   background-color: ${({ theme }) => theme.palette.secondary.main};
+  color: ${({ theme }) => theme.palette.secondary.contrastText};
+
   ul {
     list-style: none;
     margin: 0;
@@ -49,7 +73,6 @@ const StyledFooter = styled(Footer)`
   a {
     transition: all 0.25s;
     opacity: 1;
-    color: black;
     text-decoration: none;
   }
 
@@ -60,7 +83,8 @@ const StyledFooter = styled(Footer)`
 
 export const SITE_TITLE = 'El Yanki en Buenos Aires';
 
-export const Layout: React.FC<LayoutProps> = ({ children }) => {
+export const Layout: React.FC<LayoutProps> = ({ reports, children }) => {
+  console.log('r', reports);
   return (
     <>
       <Head>
@@ -80,10 +104,20 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Body>
         <StyledPageHeader />
         {children}
-        <StyledFooter />
+        <StyledFooter reports={reports} />
       </Body>
     </>
   );
 };
+
+export async function getServerSideProps({ query }: { query: { lang: Language } }) {
+  const reports = await PrismicService.reports({ language: query.lang });
+  console.log('r', reports);
+  return {
+    props: {
+      reports,
+    },
+  };
+}
 
 export default Layout;

@@ -51,7 +51,7 @@ const StyledWave = styled(Wave)<{
   height: fit-content;
   color: ${({ theme }) => theme.palette.primary.main};
   position: absolute;
-  left: 0;
+
   z-index: 0;
   /* ${({ reverse }) => (reverse ? `bottom: 100%;` : `top: 100%;`)} */
   transform: translateY(${({ n }) => n}rem);

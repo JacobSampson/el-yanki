@@ -30,7 +30,6 @@ class PrismicService {
 
   static async reports({ language }: { language: Language }): Promise<Partial<Report>[]> {
     const reports = await client.getAllByType('post', {
-      lang: language,
       graphQuery: `
         {
           post {
@@ -43,6 +42,7 @@ class PrismicService {
           }
         }
       `,
+      ...(language ? { lang: language } : {}),
     });
 
     if (!reports?.length) return [];
@@ -66,7 +66,7 @@ class PrismicService {
   }
 
   static async report({ language, reportId }: { language: Language; reportId: string }) {
-    const { data } = await client.getByUID('post', reportId, { lang: language });
+    const { data } = await client.getByUID('post', reportId, language ? { lang: language } : {});
 
     return {
       title: data.title[0].text,
