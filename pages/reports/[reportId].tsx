@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import PrismicService from '../../lib/core/services/prismic';
-import { Language } from '../../lib/core/types';
 import Waves from '../../components/Waves';
 import Report from '../../components/Report';
 
-const Container = styled.main``;
+const Container = styled.main`
+  overflow-x: hidden;
+`;
 
 export type Report = {
   title: string;

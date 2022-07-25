@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
-import useLocalization, { plural } from '../lib/client/hooks/useLocalization';
+import { useLanguageContext } from '../lib/client/contexts/LanguageContext';
+import useLocalization, { plural, ucc } from '../lib/client/hooks/useLocalization';
 
 export interface ProfileProps {
   title: string;
@@ -101,6 +102,7 @@ const Profile: React.FC<ProfileProps> = ({
   quoteAuthor,
   ...props
 }) => {
+  const { language } = useLanguageContext();
   const l = useLocalization();
 
   return (
@@ -114,11 +116,11 @@ const Profile: React.FC<ProfileProps> = ({
           <SubTitle>{subTitle}</SubTitle>
         </About>
         <Links>
-          <Link href="updates">
-            <StyledLink>{l('update', plural)}</StyledLink>
+          <Link href={{ pathname: 'updates', query: { lang: language } }}>
+            <StyledLink>{l('update', ucc, plural)}</StyledLink>
           </Link>
           <Link href="#reports">
-            <StyledLink>{l('report', plural)}</StyledLink>
+            <StyledLink>{l('report', ucc, plural)}</StyledLink>
           </Link>
         </Links>
       </Details>

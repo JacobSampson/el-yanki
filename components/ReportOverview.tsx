@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
+import useLocalization from '../lib/client/hooks/useLocalization';
 
 const Container = styled.section<{ isLocked: boolean }>`
   position: relative;
@@ -102,6 +103,7 @@ const ReportOverview: React.FC<ReportOverviewProps> = ({
   children,
   ...props
 }) => {
+  const l = useLocalization();
   return (
     <Container isLocked={!!isLocked} {...props}>
       {cover && (
@@ -110,11 +112,11 @@ const ReportOverview: React.FC<ReportOverviewProps> = ({
         </StyledImage>
       )}
       <Title>{title}</Title>
-      {/* <Description>{description}</Description> */}
+      {description && <Description>{description}</Description>}
       <About>
         <SubTitle>{subTitle}</SubTitle>
-        <Link href={`reports/${reportId}`}>
-          <Availability isLocked={isLocked}>{isLocked ? 'locked' : 'view'}</Availability>
+        <Link href={`reports/[reportId]`} as={`reports/${reportId}`}>
+          <Availability isLocked={isLocked}>{isLocked ? l('locked') : l('view')}</Availability>
         </Link>
       </About>
       {children}

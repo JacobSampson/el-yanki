@@ -13,7 +13,24 @@ const client = prismic.createClient(PRISMIC_ENDPOINT, {
 
 class PrismicService {
   static async updates({ language }: { language: Language }) {
-    return await client.getAllByType('update', { lang: language });
+    const updates = await client.getAllByType('update', { lang: language });
+
+    if (!updates?.length) return [];
+
+    try {
+      return updates
+        .map(({ data, first_publication_date: updateTimestamp, ...rest }) => ({
+          updateTimestamp,
+          title: data.title[0].text,
+          body: data.body,
+          ...rest,
+        }))
+        .sort(({ updateTimestamp: ut1 }, { updateTimestamp: ut2 }) => ut1.localeCompare(ut2))
+        .reverse();
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
   }
 
   static async landing({ language }: { language: Language }) {

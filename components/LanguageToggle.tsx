@@ -84,8 +84,8 @@ const LanguageToggle: React.FC<LanguageToggleProps> = ({ ...props }) => {
     <Container onClick={toggle} {...props}>
       <Knob selector atStart={language === 'en-us'} />
       <Knob atStart={language !== 'en-us'} />
-      <Gutter active={language === 'en-us'}>english</Gutter>
-      <Gutter active={language === 'en-us'}>espa&ntilde;ol</Gutter>
+      <Gutter active={language === 'en-us'}>English</Gutter>
+      <Gutter active={language === 'en-us'}>Espa&ntilde;ol</Gutter>
     </Container>
   );
 };

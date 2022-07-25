@@ -31,8 +31,12 @@ const LOCALIZED_STRINGS = [
     {
       home: 'home',
       report: 'report',
+      locked: 'locked',
       update: 'update',
       view: 'view',
+      ReportDisclaimer: `Research Report 2022
+      University of Wisconsin
+      River Falls, Wisconsin`,
     },
   ],
   [
@@ -41,8 +45,12 @@ const LOCALIZED_STRINGS = [
       home: 'página de inicio',
       [t('home', ucc)]: 'Página de Inicio',
       report: 'reportaje',
+      locked: 'bloqueado',
       update: 'noticia',
       view: 'ver',
+      ReportDisclaimer: `Research Report 2022
+      University of Wisconsin
+      River Falls, Wisconsin`,
     },
   ],
 ] as const;

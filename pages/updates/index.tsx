@@ -12,7 +12,7 @@ const Container = styled.main`
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
-  gap: 3rem;
+  gap: 2rem;
   padding-bottom: 3rem;
   color: ${({ theme }) => theme.palette.secondary.contrastText};
 
@@ -26,8 +26,8 @@ export interface UpdatesPageProps {
 }
 
 const StyledUpdate = styled(Update)`
-  width: 100%;
   max-width: 50rem;
+  width: calc(100% - 4rem);
 `;
 
 const StyledWaves = styled(Waves)`
@@ -36,6 +36,7 @@ const StyledWaves = styled(Waves)`
 
 const Title = styled.h2`
   text-align: center;
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 const UpdatesPage: React.FC<UpdatesPageProps> = ({ updates }: { updates: any[] }) => {
@@ -43,13 +44,14 @@ const UpdatesPage: React.FC<UpdatesPageProps> = ({ updates }: { updates: any[] }
   return (
     <Container>
       <StyledWaves colors={['#FFB81C', '#6CACE4']}>
-        <Title>{l('update', plural)}</Title>
+        <Title>{l('update', ucc, plural)}</Title>
       </StyledWaves>
-      {updates.map(update => (
+      {updates.map(({ title, body, updateTimestamp }) => (
         <StyledUpdate
-          key={update.data.title[0].text}
-          title={update.data.title[0].text}
-          body={update.data.body}
+          key={`${title}-${updateTimestamp}`}
+          title={title}
+          updateTimestamp={updateTimestamp}
+          body={body}
         />
       ))}
     </Container>

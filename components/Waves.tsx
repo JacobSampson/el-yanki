@@ -16,6 +16,7 @@ const Container = styled.div<{ reverse?: boolean }>`
   flex-direction: column;
   position: relative;
   justify-content: center;
+  overflow-x: clip;
 `;
 
 const Content = styled.div<{ reverse?: boolean }>`
@@ -36,6 +37,8 @@ const Decoration = styled.div<{
   reverse?: boolean;
 }>`
   position: relative;
+  top: 100%;
+  transform: translateY(-100%);
   width: 100%;
   height: 100%;
 

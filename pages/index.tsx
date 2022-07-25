@@ -7,19 +7,26 @@ import { Language } from '../lib/core/types';
 import { Report } from '../lib/core/models/report';
 import Profile from '../components/Profile';
 import Quote from '../components/Quote';
-import useLocalization from '../lib/client/hooks/useLocalization';
+import useLocalization, { ucc } from '../lib/client/hooks/useLocalization';
 
 const Container = styled.main`
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+
+  & > * {
+    width: 100%;
+  }
 `;
 
 const StyledLanguageToggle = styled(LanguageToggle)`
   position: absolute;
   left: 0;
-  top: 7rem;
+  top: 12rem;
+  width: fit-content;
   transform: rotate(90deg) translateY(3rem);
-  z-index: 1000 !important;
+  z-index: 100 !important;
 `;
 
 const StyledReportOverview = styled(ReportOverview)`
@@ -28,6 +35,7 @@ const StyledReportOverview = styled(ReportOverview)`
 
 const StyledWaves = styled(Waves)`
   background-color: #6cace4;
+  width: 100%;
 `;
 
 const Reports = styled.div`
@@ -50,7 +58,8 @@ const StyledProfile = styled.div`
 const StyledQuote = styled.div`
   display: flex;
   justify-content: center;
-  margin: 6rem 0;
+  margin: 6rem auto;
+  width: calc(100% - 4rem);
 `;
 
 const LandingPage = ({
@@ -97,7 +106,7 @@ const LandingPage = ({
                 key={uid}
                 reportId={uid}
                 title={title}
-                subTitle={`${l('report')} ${reportNumber}/${reports.length}`}
+                subTitle={`${l('report', ucc)} ${reportNumber}/${reports.length}`}
                 description={summary}
                 isLocked={!!isLocked}
                 cover={cover}

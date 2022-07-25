@@ -10,7 +10,6 @@ const Container = styled.section`
 
   box-shadow: 0.5rem 0.5rem 0 #0a316144;
   overflow-x: hidden;
-  margin: 1rem;
 
   img {
     max-width: 100%;
@@ -19,15 +18,25 @@ const Container = styled.section`
   }
 `;
 
+const Date = styled.div`
+  position: absolute;
+  right: 1.5rem;
+  top: 1rem;
+  opacity: 0.5;
+`;
+
 export interface UpdateProps {
   title: string;
+  updateTimestamp: string;
   body: any;
 }
 
-const Update: React.FC<UpdateProps> = ({ title, body, ...props }) => {
+const Update: React.FC<UpdateProps> = ({ title, updateTimestamp, body, ...props }) => {
+  const date = updateTimestamp.split('T')[0];
   return (
     <Container {...props}>
       <h1>{title}</h1>
+      <Date>{date}</Date>
       {RichText.render(body)}
     </Container>
   );
