@@ -13,16 +13,21 @@ const useComments = () => {
       language: Language;
       body: string;
     }) => {
-      const response = await fetch('/api/comment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ updateId, language, body }),
-      });
+      try {
+        const response = await fetch('/api/comment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ updateId, language, body }),
+        });
 
-      const result = await response.json();
-      console.log('result'), result;
+        const result = await response.json();
+
+        console.log(result);
+      } catch (e) {
+        console.log('[err]', e);
+      }
 
       Router.reload();
     },
