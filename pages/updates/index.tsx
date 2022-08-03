@@ -95,7 +95,8 @@ export async function getServerSideProps({ query }: { query: { lang: Language } 
                 isAdmin: false,
                 updateTimestamp: postedAt.toString(),
                 ...rest,
-              })),
+              }))
+              .sort((c1, c2) => c1.updateTimestamp.localeCompare(c2.updateTimestamp)).reverse(),
           ],
         };
       }),

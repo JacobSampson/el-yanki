@@ -49,7 +49,7 @@ const StyledWave = styled(Wave)<{
   position: absolute;
 
   z-index: 0;
-  transform: translateY(${({ offset }) => offset}rem);
+  transform: scale(1.5) translateY(${({ offset }) => offset}rem);
   transition: ease-in-out 0.125s;
 ` as any;
 
@@ -82,7 +82,7 @@ const SlidingWave = ({
             ${2 * (wavePattern(t, 50) - 1) * offset}rem,
             ${wavePattern(y * 0.5 + t, 50) * offset + offset}rem
           )
-          scale(1.1) rotate(${top ? '180deg' : '0deg'})
+          scale(1.5) rotate(${top ? '180deg' : '0deg'})
         `,
       }}
     />
