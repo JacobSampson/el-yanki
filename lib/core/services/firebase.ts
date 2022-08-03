@@ -33,7 +33,7 @@ export class ResourceService {
     const docs = comments.docs.map(d => {
       const { body, postedAt, language, updateId } = d.data();
 
-      return { body, postedAt: formatDate(postedAt.toDate()), language, updateId };
+      return { body, postedAt: formatDate(postedAt.toDate(), language), language, updateId };
     });
 
     return docs;

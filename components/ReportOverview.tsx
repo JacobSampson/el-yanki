@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
-import useLocalization from '../lib/client/hooks/useLocalization';
+import useLocalization, { ucc } from '../lib/client/hooks/useLocalization';
 import { PrismicImage } from '../lib/core/models/prismic/image';
 
 export interface ReportOverviewProps {
@@ -139,7 +139,9 @@ const ReportOverview: React.FC<ReportOverviewProps> = ({
         <About>
           <SubTitle>{subTitle}</SubTitle>
           <Link href={`reports/[reportId]`} as={`reports/${reportId}`}>
-            <Availability isLocked={isLocked}>{isLocked ? l('locked') : l('view')}</Availability>
+            <Availability isLocked={isLocked}>
+              {isLocked ? l('locked', ucc) : l('view', ucc)}
+            </Availability>
           </Link>
         </About>
         {children}

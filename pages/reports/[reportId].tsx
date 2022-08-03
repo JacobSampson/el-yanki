@@ -5,6 +5,7 @@ import PrismicService from '../../lib/core/services/prismic';
 import Waves from '../../components/Waves';
 import Report from '../../components/Report';
 import { formatDate } from '../../lib/core/utils';
+import { useLanguageContext } from '../../lib/client/contexts/LanguageContext';
 
 const Container = styled.main`
   overflow-x: hidden;
@@ -58,6 +59,7 @@ const ReportPage: React.FC<ReportPageProps> = ({
   updateTimestamp,
 }: ReportPageProps) => {
   const router = useRouter();
+  const { language } = useLanguageContext();
 
   if (!body?.length) {
     router.push('/404');
@@ -67,7 +69,7 @@ const ReportPage: React.FC<ReportPageProps> = ({
     <Container>
       <StyledWaves colors={['#FFB81C', '#6CACE4']}>
         <Title>{title}</Title>
-        <Timestamp>{formatDate(updateTimestamp)}</Timestamp>
+        <Timestamp>{formatDate(updateTimestamp, language)}</Timestamp>
       </StyledWaves>
       <StyledReport key={title} body={body} />
     </Container>

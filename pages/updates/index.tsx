@@ -9,6 +9,7 @@ import PrismicService from '../../lib/core/services/prismic';
 import { ResourceService } from '../../lib/core/services/firebase';
 import useComments from '../../lib/client/hooks/useComments';
 import { useLanguageContext } from '../../lib/client/contexts/LanguageContext';
+import { formatDate } from '../../lib/core/utils';
 
 const Container = styled.main`
   display: flex;
@@ -62,7 +63,7 @@ const UpdatesPage: React.FC<UpdatesPageProps> = ({ updates }) => {
         <StyledUpdate
           key={`${title}-${updateTimestamp}`}
           title={title}
-          updateTimestamp={updateTimestamp}
+          updateTimestamp={formatDate(updateTimestamp, language)}
           onCreate={body => addComment({ updateId: id, language, body })}
           body={body}
           comments={comments}
@@ -96,7 +97,8 @@ export async function getServerSideProps({ query }: { query: { lang: Language } 
                 updateTimestamp: postedAt.toString(),
                 ...rest,
               }))
-              .sort((c1, c2) => c1.updateTimestamp.localeCompare(c2.updateTimestamp)).reverse(),
+              .sort((c1, c2) => c1.updateTimestamp.localeCompare(c2.updateTimestamp))
+              .reverse(),
           ],
         };
       }),

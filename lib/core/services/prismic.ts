@@ -19,7 +19,7 @@ class PrismicService {
     try {
       return updates
         .map(({ id, data, first_publication_date: updateTimestamp }) => ({
-          updateTimestamp: formatDate(updateTimestamp),
+          updateTimestamp,
           title: data.title[0].text,
           body: data.body,
           comments: data.comments?.length

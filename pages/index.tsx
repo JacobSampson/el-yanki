@@ -28,6 +28,10 @@ const StyledLanguageToggle = styled(LanguageToggle)`
   width: fit-content;
   transform: rotate(90deg) translateY(3rem);
   z-index: 100 !important;
+
+  @media (max-width: ${({ theme }) => theme.screen.xsmall}) {
+    left: -0.75rem;
+  }
 `;
 
 const StyledReportOverview = styled(ReportOverview)`

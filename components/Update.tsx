@@ -1,6 +1,7 @@
 import { RichText } from 'prismic-reactjs';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useLanguageContext } from '../lib/client/contexts/LanguageContext';
 import useLocalization, { denominalize, ucc } from '../lib/client/hooks/useLocalization';
 import { formatDate } from '../lib/core/utils';
 
@@ -172,6 +173,7 @@ const Update: React.FC<UpdateProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [comment, setComment] = useState<string>();
   const l = useLocalization();
+  const { language } = useLanguageContext();
 
   const editText = !isEditing ? l('comment', ucc, denominalize) : l('close', ucc);
   const addText = l('post', ucc);
@@ -180,14 +182,14 @@ const Update: React.FC<UpdateProps> = ({
     <Container {...props}>
       <TextArea>
         <h1>{title}</h1>
-        <Date>{formatDate(updateTimestamp)}</Date>
+        <Date>{updateTimestamp}</Date>
         {RichText.render(body)}
       </TextArea>
 
       <Comments>
         {comments.map(({ isAdmin, body, updateTimestamp }, index) => (
           <Comment key={index} isAdmin={isAdmin}>
-            {updateTimestamp && <Date>{formatDate(updateTimestamp)}</Date>}
+            {updateTimestamp && <Date>{formatDate(updateTimestamp, language)}</Date>}
             {body}
           </Comment>
         ))}
