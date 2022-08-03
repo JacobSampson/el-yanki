@@ -7,7 +7,8 @@ import { Language } from '../lib/core/types';
 import { Report } from '../lib/core/models/report';
 import Profile from '../components/Profile';
 import Quote from '../components/Quote';
-import useLocalization, { ucc } from '../lib/client/hooks/useLocalization';
+import useLocalization, { plural, ucc } from '../lib/client/hooks/useLocalization';
+import { PrismicImage } from '../lib/core/models/prismic/image';
 
 const Container = styled.main`
   display: flex;
@@ -30,7 +31,7 @@ const StyledLanguageToggle = styled(LanguageToggle)`
 `;
 
 const StyledReportOverview = styled(ReportOverview)`
-  margin: 4rem 2rem;
+  margin: 4rem 3rem;
 `;
 
 const StyledWaves = styled(Waves)`
@@ -62,6 +63,11 @@ const StyledQuote = styled.div`
   width: calc(100% - 4rem);
 `;
 
+const About = styled.section`
+  padding: 10rem 0;
+  text-align: center;
+`;
+
 const LandingPage = ({
   title,
   subTitle,
@@ -72,7 +78,7 @@ const LandingPage = ({
 }: {
   title: string;
   subTitle: string;
-  profile: string;
+  profile: PrismicImage;
   quoteText: string;
   quoteAuthor: string;
   reports: Report[];
@@ -98,7 +104,7 @@ const LandingPage = ({
         <Quote text={quoteText} author={quoteAuthor} />
       </StyledQuote>
 
-      <StyledWavesReports colors={['#0A3161', '#6CACE4']}>
+      <StyledWavesReports colors={['#0A3161', '#6CACE4']} both>
         <Reports id="reports">
           {reports.map(
             ({ uid, title, reportNumber, summary, isLocked, updateTimestamp, cover }, index) => (
@@ -111,21 +117,29 @@ const LandingPage = ({
                 isLocked={!!isLocked}
                 cover={cover}
                 updateTimestamp={updateTimestamp}
-                style={{ alignItems: index % 2 === 0 ? 'end' : 'start' }}
+                style={{
+                  alignItems: index % 2 === 0 ? 'end' : 'start',
+                  flexDirection: index % 2 !== 0 ? 'row-reverse' : 'row',
+                }}
               />
             )
           )}
         </Reports>
       </StyledWavesReports>
+
+      <About id="about">{l('about', ucc)}</About>
+      {/* <About id="signUp">{l('signUp', ucc)}</About> */}
     </Container>
   );
 };
 
 export async function getServerSideProps({ query }: { query: { lang: Language } }) {
-  const [{ title, subTitle, profile, quoteText, quoteAuthor }, reports] = await Promise.all([
+  const [landing, reports] = await Promise.all([
     PrismicService.landing({ language: query.lang }),
     PrismicService.reports({ language: query.lang }),
   ]);
+
+  const { title, subTitle, profile, quoteText, quoteAuthor } = landing;
 
   return {
     props: {

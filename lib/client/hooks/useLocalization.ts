@@ -10,6 +10,8 @@ export const ucc = (s: string) =>
 
 export const plural = (s: string) => `${s}s`;
 
+export const denominalize = (s: string) => s;
+
 /**
  * Library functions
  */
@@ -32,7 +34,12 @@ const LOCALIZED_STRINGS = [
       home: 'home',
       report: 'report',
       locked: 'locked',
+      close: 'close',
+      post: 'post',
+      about: 'about',
       update: 'update',
+      comment: 'comment',
+      signUp: 'sign up',
       view: 'view',
       ReportDisclaimer: `Research Report 2022
       University of Wisconsin
@@ -46,7 +53,13 @@ const LOCALIZED_STRINGS = [
       [t('home', ucc)]: 'Página de Inicio',
       report: 'reportaje',
       locked: 'bloqueado',
+      close: 'cerrar',
+      post: 'publicar',
+      about: 'información general',
       update: 'noticia',
+      comment: 'comentario',
+      [t('comment', ucc, denominalize)]: ucc('comentar'),
+      signUp: 'inscribirse',
       view: 'ver',
       ReportDisclaimer: `Research Report 2022
       University of Wisconsin

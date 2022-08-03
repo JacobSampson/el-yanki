@@ -1,3 +1,5 @@
+import { PrismicImage } from './prismic/image';
+
 export interface Report {
   uid: string;
   title: string;
@@ -5,5 +7,5 @@ export interface Report {
   summary: string;
   isLocked: boolean;
   updateTimestamp: string;
-  cover?: string;
+  cover?: PrismicImage;
 }

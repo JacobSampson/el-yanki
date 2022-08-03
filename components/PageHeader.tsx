@@ -118,7 +118,12 @@ const PageHeader = ({ ...props }) => {
     <Container {...props}>
       <Logo>
         <Link href={{ pathname: '/', query: { lang: language } }}>
-          <StyledLogo src="/logo.svg" alt="el yanki" width={223} height={46}></StyledLogo>
+          <StyledLogo
+            src="/resources/icons/logo_extended.svg"
+            alt="el yanki"
+            width={223}
+            height={46}
+          ></StyledLogo>
         </Link>
       </Logo>
 

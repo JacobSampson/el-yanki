@@ -7,11 +7,12 @@ const wavePattern = (x: number, dampening: number = 1): number => Math.sin(x / d
 
 export interface WaveProps {
   colors: string[];
-  reverse?: boolean;
+  top?: boolean;
+  both?: boolean;
   children?: React.ReactNode;
 }
 
-const Container = styled.div<{ reverse?: boolean }>`
+const Container = styled.div<{ top?: boolean }>`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -19,7 +20,7 @@ const Container = styled.div<{ reverse?: boolean }>`
   overflow-x: clip;
 `;
 
-const Content = styled.div<{ reverse?: boolean }>`
+const Content = styled.div<{ top?: boolean }>`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -29,26 +30,18 @@ const Content = styled.div<{ reverse?: boolean }>`
   * {
     z-index: 100;
   }
-
-  /* ${({ reverse }) => reverse && 'margin-top: 14%'}; */
 `;
 
 const Decoration = styled.div<{
-  reverse?: boolean;
+  top?: boolean;
 }>`
   position: relative;
-  top: 100%;
-  transform: translateY(-100%);
   width: 100%;
-  height: 100%;
-
-  /* ${({ reverse }) => (reverse ? 'transform: translateY(-5%)' : 'transform: translateY(5%)')};
-  ${({ reverse }) => (reverse ? 'margin-top: 30%' : 'margin-bottom: 30%')}; */
+  height: 25vw;
 `;
 
 const StyledWave = styled(Wave)<{
-  reverse?: boolean;
-  n: number;
+  offset: number;
 }>`
   width: 100%;
   height: fit-content;
@@ -56,66 +49,69 @@ const StyledWave = styled(Wave)<{
   position: absolute;
 
   z-index: 0;
-  /* ${({ reverse }) => (reverse ? `bottom: 100%;` : `top: 100%;`)} */
-  transform: translateY(${({ n }) => n}rem);
+  transform: translateY(${({ offset }) => offset}rem);
   transition: ease-in-out 0.125s;
-  top: 100%;
 ` as any;
 
 const SlidingWave = ({
-  reverse,
-  n,
+  top,
+  initialOffset,
   fill,
   maxOffset,
   ...props
 }: {
-  reverse?: boolean;
-  n?: number;
+  top?: boolean;
+  initialOffset?: number;
   fill?: string;
   maxOffset: number;
 }) => {
-  const { ref, y, viewportHeight } = useRelativeY();
-  const t = useTimer(75);
+  const { ref, y } = useRelativeY();
+  const t = useTimer(100, 50 * Math.random());
 
-  const offset = (reverse ? -1 : 1) * maxOffset;
-  const absoluteY = (viewportHeight / 2 + y) * 0.1;
+  const offset = (top ? -1 : 1) * maxOffset;
 
   return (
     <StyledWave
       innerRef={ref}
-      reverse={reverse}
-      n={n || 0}
+      offset={initialOffset}
       fill={fill}
       {...props}
       style={{
         transform: `
           translate(
             ${2 * (wavePattern(t, 50) - 1) * offset}rem,
-            ${wavePattern(absoluteY + t, 50) * offset}rem
+            ${wavePattern(y * 0.5 + t, 50) * offset + offset}rem
           )
-          scale(1.1) rotate(${reverse ? '180deg' : '0deg'})
+          scale(1.1) rotate(${top ? '180deg' : '0deg'})
         `,
       }}
     />
   );
 };
 
-const Waves = ({ colors = [], children, reverse = false, ...props }: WaveProps) => (
-  <Container reverse={reverse}>
-    <Decoration reverse={reverse}>
-      {(reverse ? [...colors].reverse() : colors).map((color, n) => (
-        <SlidingWave
-          reverse={!!reverse}
-          key={n}
-          n={colors.length - n - 1}
-          maxOffset={colors.length - n - 1}
-          fill={color}
-        />
-      ))}
-    </Decoration>
-    <Content reverse={reverse} {...props}>
+const StyledDecoration = ({ top, colors, ...props }: WaveProps) => (
+  <Decoration top={top} {...props}>
+    {colors.map((color, n) => (
+      <SlidingWave
+        top={!!top}
+        key={n}
+        initialOffset={n}
+        maxOffset={colors.length - n - 1}
+        fill={color}
+      />
+    ))}
+  </Decoration>
+);
+
+const Waves = ({ colors = [], children, both = false, top = false, ...props }: WaveProps) => (
+  <Container top={top}>
+    {(both || top) && <StyledDecoration colors={[...colors].reverse()} top={true} />}
+    <Content top={top} {...props}>
       {children}
     </Content>
+    {(both || !top) && (
+      <StyledDecoration colors={both ? [...colors].reverse() : colors} top={false} />
+    )}
   </Container>
 );
 

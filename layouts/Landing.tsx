@@ -9,6 +9,7 @@ import PrismicService from '../lib/core/services/prismic';
 import { Report } from '../lib/core/models/report';
 import { Language } from '../lib/core/types';
 import { useLanguageContext } from '../lib/client/contexts/LanguageContext';
+import Waves from '../components/Waves';
 
 export interface LayoutProps {
   reports?: Report[];
@@ -30,22 +31,28 @@ const StyledPageHeader = styled(PageHeader)`
 `;
 
 const ReportDisclaimer = styled.ul`
+  box-shadow: 1rem 0.5rem 0px #00000024;
   background-color: #001e32;
   text-align: left;
   padding: 3rem;
   list-style: none;
   margin: 0;
+  border-top-right-radius: 100rem;
 
   p {
     margin: 0.5rem;
     opacity: 0.5;
+  }
+
+  @media (max-width: ${({ theme }) => theme.screen.xsmall}) {
+    order: 1;
   }
 `;
 
 const PageLinks = styled.ul`
   list-style: none;
   margin: 0;
-  padding: 3rem;
+  padding: 3rem 5rem;
   text-align: right;
   justify-content: center;
   display: flex;
@@ -96,12 +103,17 @@ const Footer = ({ ...props }) => {
 };
 
 const StyledFooter = styled(Footer)`
-  padding-top: 5rem;
+  width: 100%;
   background-color: ${({ theme }) => theme.palette.secondary.main};
   color: ${({ theme }) => theme.palette.secondary.contrastText};
 
   display: grid;
   grid-template-columns: 1fr 1fr;
+
+  @media (max-width: ${({ theme }) => theme.screen.xsmall}) {
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: none;
+  }
 `;
 
 export const SITE_TITLE = 'El Yanki en Buenos Aires';
@@ -126,7 +138,9 @@ export const Layout: React.FC<LayoutProps> = ({ reports, children, ...props }) =
       <Body>
         <StyledPageHeader />
         {children}
-        <StyledFooter reports={reports || []} />
+        <Waves colors={['#0A3161', '#6CACE4']} top>
+          <StyledFooter reports={reports || []} />
+        </Waves>
       </Body>
     </>
   );

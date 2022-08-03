@@ -3,11 +3,12 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { useLanguageContext } from '../lib/client/contexts/LanguageContext';
 import useLocalization, { plural, ucc } from '../lib/client/hooks/useLocalization';
+import { PrismicImage } from '../lib/core/models/prismic/image';
 
 export interface ProfileProps {
   title: string;
   subTitle: string;
-  profile: string;
+  profile: PrismicImage;
   quoteText: string;
   quoteAuthor: string;
 }
@@ -66,10 +67,15 @@ const StyledLink = styled.div`
   }
 `;
 
+const StyledSecondaryLink = styled(StyledLink)`
+  background-color: #b9d6f030;
+`;
+
 const StyledImage = styled.div`
   position: relative;
   flex-basis: 1;
   min-width: 10rem;
+  border-radius: 0.5rem;
 
   &::before {
     content: '';
@@ -108,19 +114,35 @@ const Profile: React.FC<ProfileProps> = ({
   return (
     <Container {...props}>
       <StyledImage>
-        <Image src={profile} alt={title} width={300} height={400} />
+        <Image
+          src={profile.url}
+          alt={title}
+          width={500 * (profile.width / profile.height)}
+          height={500}
+        />
       </StyledImage>
       <Details>
         <Title>{title}</Title>
         <About>
           <SubTitle>{subTitle}</SubTitle>
         </About>
+        <br></br>
         <Links>
           <Link href={{ pathname: 'updates', query: { lang: language } }}>
             <StyledLink>{l('update', ucc, plural)}</StyledLink>
           </Link>
           <Link href="#reports">
             <StyledLink>{l('report', ucc, plural)}</StyledLink>
+          </Link>
+        </Links>
+        <Links>
+          <Link href="#about">
+            <StyledSecondaryLink>{l('about', ucc)}</StyledSecondaryLink>
+          </Link>
+          <Link href="#signup">
+            <StyledSecondaryLink>
+              <s>{l('signUp', ucc)}</s>
+            </StyledSecondaryLink>
           </Link>
         </Links>
       </Details>

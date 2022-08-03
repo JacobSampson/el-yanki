@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useTimer = (rate: number = 10) => {
+const useTimer = (rate: number = 10, random: number = 0) => {
   const [t, setT] = useState(0);
 
   useEffect(() => {

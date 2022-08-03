@@ -2,10 +2,27 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 import useLocalization from '../lib/client/hooks/useLocalization';
+import { PrismicImage } from '../lib/core/models/prismic/image';
+
+export interface ReportOverviewProps {
+  reportId: string;
+  title: string;
+  subTitle: string;
+  description: string;
+  updateTimestamp: string;
+  cover?: PrismicImage;
+  isLocked?: boolean;
+  children?: React.ReactNode;
+  style?: React.CSSProperties;
+}
 
 const Container = styled.section<{ isLocked: boolean }>`
   position: relative;
   display: grid;
+  display: flex;
+  justify-content: space-between;
+  grid-gap: 1rem;
+
   ${({ isLocked }) =>
     isLocked &&
     `
@@ -14,18 +31,6 @@ const Container = styled.section<{ isLocked: boolean }>`
     pointer-events: none;
   `}
 `;
-
-export interface ReportOverviewProps {
-  reportId: string;
-  title: string;
-  subTitle: string;
-  description: string;
-  updateTimestamp: string;
-  cover?: string;
-  isLocked?: boolean;
-  children?: React.ReactNode;
-  style?: React.CSSProperties;
-}
 
 const Title = styled.h3`
   width: 100%;
@@ -61,8 +66,6 @@ const SubTitle = styled.h4`
 const Description = styled.p``;
 
 const StyledImage = styled.div`
-  top: 0;
-  position: absolute;
   opacity: 0.4;
   display: flex;
   flex-direction: column;
@@ -92,6 +95,18 @@ const Availability = styled.p<{ isLocked: boolean }>`
   }
 `;
 
+const Aside = styled.div`
+  @media (max-width: ${({ theme }) => theme.screen.xsmall}) {
+    position: absolute;
+    opacity: 0.5;
+  }
+`;
+
+const Body = styled.div`
+  align-items: inherit;
+  flex-grow: 1;
+`;
+
 const ReportOverview: React.FC<ReportOverviewProps> = ({
   isLocked = false,
   reportId,
@@ -106,20 +121,29 @@ const ReportOverview: React.FC<ReportOverviewProps> = ({
   const l = useLocalization();
   return (
     <Container isLocked={!!isLocked} {...props}>
-      {cover && (
-        <StyledImage>
-          <Image src={cover} alt={title} width={200} height={200} />
-        </StyledImage>
-      )}
-      <Title>{title}</Title>
-      {description && <Description>{description}</Description>}
-      <About>
-        <SubTitle>{subTitle}</SubTitle>
-        <Link href={`reports/[reportId]`} as={`reports/${reportId}`}>
-          <Availability isLocked={isLocked}>{isLocked ? l('locked') : l('view')}</Availability>
-        </Link>
-      </About>
-      {children}
+      <Aside>
+        {cover && (
+          <StyledImage>
+            <Image
+              src={cover.url}
+              alt={title}
+              width={200 * (cover.width / cover.height)}
+              height={200}
+            />
+          </StyledImage>
+        )}
+      </Aside>
+      <Body>
+        <Title>{title}</Title>
+        {description && <Description>{description}</Description>}
+        <About>
+          <SubTitle>{subTitle}</SubTitle>
+          <Link href={`reports/[reportId]`} as={`reports/${reportId}`}>
+            <Availability isLocked={isLocked}>{isLocked ? l('locked') : l('view')}</Availability>
+          </Link>
+        </About>
+        {children}
+      </Body>
     </Container>
   );
 };
