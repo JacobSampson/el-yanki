@@ -40,19 +40,6 @@ const Decoration = styled.div<{
   height: 25vw;
 `;
 
-const StyledWave = styled(Wave)<{
-  offset: number;
-}>`
-  width: 100%;
-  height: fit-content;
-  color: ${({ theme }) => theme.palette.primary.main};
-  position: absolute;
-
-  z-index: 0;
-  transform: scale(1.5) translateY(${({ offset }) => offset}rem);
-  transition: ease-in-out 0.125s;
-` as any;
-
 const SlidingWave = ({
   top,
   initialOffset,
@@ -71,31 +58,40 @@ const SlidingWave = ({
   const offset = (top ? -1 : 1) * maxOffset;
 
   return (
-    <StyledWave
+    <Wave
       innerRef={ref}
-      offset={initialOffset}
       fill={fill}
       {...props}
       style={{
         transform: `
-          translate(
-            ${2 * (wavePattern(t, 50) - 1) * offset}rem,
+            translate(
+              ${2 * (wavePattern(t, 50) - 1) * offset}rem,
             ${wavePattern(y * 0.5 + t, 50) * offset + offset}rem
-          )
-          scale(1.5) rotate(${top ? '180deg' : '0deg'})
-        `,
+            )
+            scale(1.5) rotate(${top ? '180deg' : '0deg'})
+          `,
       }}
     />
   );
 };
 
+const StyledWave = styled(SlidingWave)`
+  width: 100%;
+  height: fit-content;
+  color: ${({ theme }) => theme.palette.primary.main};
+  position: absolute;
+
+  z-index: 0;
+  transition: ease-in-out 0.125s;
+` as any;
+
 const StyledDecoration = ({ top, colors, ...props }: WaveProps) => (
   <Decoration top={top} {...props}>
     {colors.map((color, n) => (
-      <SlidingWave
+      <StyledWave
         top={!!top}
         key={n}
-        initialOffset={n}
+        initialOffset={colors.length - n - 1}
         maxOffset={colors.length - n - 1}
         fill={color}
       />

@@ -5,6 +5,7 @@ export interface WaveProps {
   fill?: string;
   innerRef?: any | MutableRefObject<HTMLElement>;
   reverse?: boolean;
+  style?: React.CSSProperties;
 }
 
 const Svg = styled.svg.attrs({

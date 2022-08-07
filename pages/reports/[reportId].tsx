@@ -36,7 +36,7 @@ const Timestamp = styled.h3`
 const StyledReport = styled(Report)`
   width: 100%;
   max-width: 50rem;
-  margin: 3rem 0;
+  margin: 0 auto;
 `;
 
 const StyledWaves = styled(Waves)`
