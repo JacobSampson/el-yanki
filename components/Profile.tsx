@@ -25,7 +25,7 @@ const Container = styled.section`
 
 const Title = styled.h3`
   width: 100%;
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: normal;
   border-bottom: 0.2rem solid ${({ theme }) => theme.palette.secondary.contrastText};
   padding-bottom: 0.5rem;
@@ -39,7 +39,7 @@ const SubTitle = styled.h4`
   width: fit-content;
   padding: 0.25rem 0.75rem;
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.25rem;
 `;
 
 const Links = styled.div`

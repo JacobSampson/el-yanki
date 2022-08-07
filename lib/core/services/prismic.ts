@@ -48,6 +48,7 @@ class PrismicService {
       subTitle: data.subtitle[0].text,
       quoteText: data.quotetext[0].text,
       quoteAuthor: data.quoteauthor[0].text,
+      about: data.about,
       profile: {
         url: data.profile.url,
         width,

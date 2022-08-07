@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { RichText } from 'prismic-reactjs';
+
 import ReportOverview from '../components/ReportOverview';
 import LanguageToggle from '../components/LanguageToggle';
 import Waves from '../components/Waves';
@@ -68,8 +70,18 @@ const StyledQuote = styled.div`
 `;
 
 const About = styled.section`
-  padding: 10rem 0;
+  padding: 6rem 3rem;
   text-align: center;
+  max-width: 50rem;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  p {
+    font-size: 1.15rem;
+  }
 `;
 
 const LandingPage = ({
@@ -78,6 +90,7 @@ const LandingPage = ({
   profile,
   quoteText,
   quoteAuthor,
+  about,
   reports,
 }: {
   title: string;
@@ -85,6 +98,7 @@ const LandingPage = ({
   profile: PrismicImage;
   quoteText: string;
   quoteAuthor: string;
+  about: any;
   reports: Report[];
 }) => {
   const l = useLocalization();
@@ -131,7 +145,9 @@ const LandingPage = ({
         </Reports>
       </StyledWavesReports>
 
-      <About id="about">{l('about', ucc)}</About>
+      <About id="about">
+        {RichText.render([{ type: 'heading2', text: l('about', ucc), spans: [] }, ...about])}
+      </About>
       {/* <About id="signUp">{l('signUp', ucc)}</About> */}
     </Container>
   );
@@ -143,7 +159,7 @@ export async function getServerSideProps({ query }: { query: { lang: Language } 
     PrismicService.reports({ language: query.lang }),
   ]);
 
-  const { title, subTitle, profile, quoteText, quoteAuthor } = landing;
+  const { title, subTitle, profile, quoteText, quoteAuthor, about } = landing;
 
   return {
     props: {
@@ -151,6 +167,7 @@ export async function getServerSideProps({ query }: { query: { lang: Language } 
       title,
       subTitle,
       profile,
+      about,
       quoteText,
       quoteAuthor,
     },

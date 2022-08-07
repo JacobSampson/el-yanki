@@ -2,7 +2,7 @@ import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 
 const Container = styled.section`
-  padding: 2rem;
+  padding: 4rem 2rem;
 
   img {
     max-width: 100%;
