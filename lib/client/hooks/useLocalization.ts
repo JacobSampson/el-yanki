@@ -41,9 +41,13 @@ const LOCALIZED_STRINGS = [
       comment: 'comment',
       signUp: 'sign up',
       view: 'view',
-      ReportDisclaimer: `Research Report 2022
+      reportDisclaimer: `Research Report 2022
       University of Wisconsin
       River Falls, Wisconsin`,
+      subscribe: 'subscribe',
+      success: 'success',
+      email: 'email',
+      emailForUpdates: 'Subscribe for Updates',
     },
   ],
   [
@@ -61,9 +65,13 @@ const LOCALIZED_STRINGS = [
       [t('comment', ucc, denominalize)]: ucc('comentar'),
       signUp: 'inscribirse',
       view: 'ver',
-      ReportDisclaimer: `Research Report 2022
+      reportDisclaimer: `Research Report 2022
       University of Wisconsin
       River Falls, Wisconsin`,
+      subscribe: 'suscribir',
+      success: 'éxito',
+      email: 'email',
+      emailForUpdates: 'Ingrese un Correo Electrónico para Noticias',
     },
   ],
 ] as const;

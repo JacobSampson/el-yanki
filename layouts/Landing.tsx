@@ -81,7 +81,7 @@ const Footer = ({ ...props }) => {
     <footer {...props}>
       <ReportDisclaimer>
         <li>
-          {l('ReportDisclaimer')
+          {l('reportDisclaimer')
             .split('\n')
             .map((line, index) => (
               <p key={index}>{line}</p>

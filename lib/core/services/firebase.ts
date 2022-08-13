@@ -52,4 +52,8 @@ export class ResourceService {
       .collection('comments')
       .add({ updateId, language, body, postedAt: firebase.firestore.FieldValue.serverTimestamp() });
   }
+
+  async subscribeEmail({ email }: { email: string }) {
+    return await this.db.collection('emails').add({ email });
+  }
 }

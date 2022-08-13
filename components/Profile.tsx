@@ -140,9 +140,7 @@ const Profile: React.FC<ProfileProps> = ({
             <StyledSecondaryLink>{l('about', ucc)}</StyledSecondaryLink>
           </Link>
           <Link href="#signup">
-            <StyledSecondaryLink>
-              <s>{l('signUp', ucc)}</s>
-            </StyledSecondaryLink>
+            <StyledSecondaryLink>{l('signUp', ucc)}</StyledSecondaryLink>
           </Link>
         </Links>
       </Details>

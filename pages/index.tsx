@@ -11,6 +11,8 @@ import Profile from '../components/Profile';
 import Quote from '../components/Quote';
 import useLocalization, { plural, ucc } from '../lib/client/hooks/useLocalization';
 import { PrismicImage } from '../lib/core/models/prismic/image';
+import { useEffect, useState } from 'react';
+import useEmail from '../lib/client/hooks/useEmail';
 
 const Container = styled.main`
   display: flex;
@@ -84,6 +86,106 @@ const About = styled.section`
   }
 `;
 
+const SignUp = styled.section`
+  padding: 6rem 3rem;
+  text-align: center;
+  max-width: 50rem;
+`;
+
+const InputItems = styled.div`
+  display: flex;
+  flex-direction: row;
+  grid-gap: 1rem;
+  justify-content: center;
+  margin: 3rem 0;
+
+  @media (max-width: ${({ theme }) => theme.screen.xsmall}) {
+    flex-direction: column;
+    margin: 3rem 0;
+  }
+
+  @keyframes stretch {
+    from {
+      letter-spacing: 0.5rem;
+    }
+    to {
+      letter-spacing: 1rem;
+    }
+  }
+
+  input {
+    outline: none;
+    border: none;
+    background-image: none;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    transition: 0.125s ease-in-out;
+    padding-left: 1rem;
+    box-shadow: 0rem 0rem 0.15rem #0a31617d, 0.5rem 0.5rem 0 #0a316144;
+    overflow-x: auto;
+    min-height: 3.5rem;
+    min-width: 20rem;
+    font-size: 16px;
+
+    &:hover {
+      cursor: text;
+    }
+  }
+
+  button {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    border-spacing: 0;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.43rem;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    height: 3.5rem;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0;
+    cursor: pointer;
+    background-color: #6cace4;
+    color: ${({ theme }) => theme.palette.secondary.main};
+    padding: 1rem 2rem;
+    box-shadow: 0.5rem 0.5rem 0 #0a316144;
+    transition: 0.125s ease-in-out;
+    overflow: hidden;
+    transform-origin: bottom right;
+    position: relative;
+    min-width: 10rem;
+
+    &:hover {
+      box-shadow: 0.25rem 0.25rem 3px #0a316144;
+      transform: translate(0.25rem, 0.25rem);
+    }
+
+    &:disabled {
+      user-select: none;
+      filter: opacity(70%);
+      pointer-events: none;
+
+      &:after {
+        content: '...';
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -33%);
+        width: 5rem;
+        height: 3rem;
+        font-weight: 800;
+        letter-spacing: 0.5rem;
+        animation: stretch 1s ease-in infinite alternate-reverse;
+      }
+    }
+  }
+`;
+
 const LandingPage = ({
   title,
   subTitle,
@@ -102,6 +204,26 @@ const LandingPage = ({
   reports: Report[];
 }) => {
   const l = useLocalization();
+  const { loading, subscribeEmail } = useEmail();
+  const [email, setEmail] = useState<string>('');
+  const [label, setLabel] = useState<string>('');
+
+  const handleSubscribe = () => {
+    if (!email) return;
+    setLabel(l('success', ucc));
+    subscribeEmail(email);
+    setEmail('');
+  };
+
+  useEffect(() => {
+    if (loading || !label) return;
+
+    setLabel(l('success', ucc));
+    setTimeout(() => {
+      setLabel(l('subscribe', ucc));
+    }, 2000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [l, loading]);
 
   return (
     <Container>
@@ -148,7 +270,20 @@ const LandingPage = ({
       <About id="about">
         {RichText.render([{ type: 'heading2', text: l('about', ucc), spans: [] }, ...about])}
       </About>
-      {/* <About id="signUp">{l('signUp', ucc)}</About> */}
+      <SignUp id="signup">
+        <h3>{l('emailForUpdates')}</h3>
+        <InputItems>
+          <input
+            disabled={loading}
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder={l('email', ucc)}
+          ></input>
+          <button disabled={loading} onClick={handleSubscribe}>
+            {!loading ? label || l('subscribe', ucc) : ''}
+          </button>
+        </InputItems>
+      </SignUp>
     </Container>
   );
 };

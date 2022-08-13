@@ -1,8 +1,10 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import Router from 'next/router';
 import { Language } from '../../core/types';
 
 const useComments = () => {
+  const [loading, setLoading] = useState(false);
+
   const addComment = useCallback(
     async ({
       updateId,
@@ -14,6 +16,7 @@ const useComments = () => {
       body: string;
     }) => {
       try {
+        setLoading(true);
         const response = await fetch('/api/comment', {
           method: 'POST',
           headers: {
@@ -21,6 +24,7 @@ const useComments = () => {
           },
           body: JSON.stringify({ updateId, language, body }),
         });
+        setLoading(false);
 
         const result = await response.json();
 
@@ -35,6 +39,7 @@ const useComments = () => {
   );
 
   return {
+    loading,
     addComment,
   };
 };
